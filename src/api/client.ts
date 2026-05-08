@@ -80,6 +80,9 @@ client.interceptors.response.use(
     // 401: clear token. Routing layer will detect missing token and redirect.
     if (status === 401) {
       tokenStorage.clear();
+      if (window.location.pathname !== '/login') {
+        window.location.href = '/login?reason=session_expired';
+      }
     }
 
     // Use backend's error code/message if available, otherwise use HTTP status

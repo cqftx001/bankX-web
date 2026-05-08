@@ -40,3 +40,21 @@ export interface AuthResponse {
     email: string;
     roles: string;
 }
+
+export interface AuthUser {
+    userId: string;
+    email: string;
+    roles: string[];
+    authorities: string[];
+}
+
+export function toAuthUser(auth: AuthResponse): AuthUser {
+    return {
+      userId: auth.userId,
+      email: auth.email,
+      roles: auth.roles
+        ? auth.roles.split(',').map((role) => role.trim()).filter(Boolean)
+        : [],
+      authorities: [],
+    };
+  }

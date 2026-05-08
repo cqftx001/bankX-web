@@ -13,6 +13,7 @@ import { parseAuthClaims } from '../utils/authClaims';
 const { Title, Text } = Typography;
 
 export function LoginPage() {
+  
   const { t } = useTranslation();
 
   const [error, setError] = useState<string | null>(null);
@@ -20,6 +21,7 @@ export function LoginPage() {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const infoMessage = (location.state as { message?: string })?.message;
 
   const setAuth = useAuthStore((state) => state.setAuth);
 
@@ -72,7 +74,15 @@ export function LoginPage() {
         margin: '0 16px',     // 🆕 手机上左右留 16px 边距
         boxShadow: '0 4px 12px rgba(0,0,0,0.08)'
       }}>
-        <Space direction="vertical" size="large" style={{ width: '100%' }}>
+        {infoMessage && (
+          <Alert
+            title={infoMessage}
+            type="info"
+            showIcon
+            style={{ marginBottom: 16 }}
+          />
+        )}
+        <Space orientation="vertical" size="large" style={{ width: '100%' }}>
           <div style={{ textAlign: 'center' }}>
             <Title level={2} style={{ marginBottom: 4 }}>
               {t('common.appName')}
